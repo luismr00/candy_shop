@@ -2,7 +2,7 @@
 
 ## Introduction 
 
-Candy Shop program coded in Ruby Language. The following instructions necessary to complete a coding challenge that consist of:
+Candy Shop program coded in Ruby Language. The following instructions were necessary to complete a coding challenge that consisted of:
 
 ### Instructions:
 
@@ -10,7 +10,7 @@ Candy Shop program coded in Ruby Language. The following instructions necessary 
 * Each shelf should know how many and which candies it contains. 
 * Each candy should know its name and whether or not it has been shelved. 
 
-### Functionality
+### Functionality:
 
 * Four files in total (one for each class and one to serve as an entry point into the application, such as init.rb).
 * When a new candy is created, it is immediately added to the store as a candy that has yet to be placed on a shelf.
