@@ -8,11 +8,9 @@ class Shop
     def initialize(shopName,shelves)
         @shopName = shopName
         @@shelves = shelves
-        #@shelfQty = shelfQty
     end
 
     def shelfQty
-        #puts "="
 
         count = 0
         @@shelves.each do |item|
@@ -23,22 +21,31 @@ class Shop
     end
 
     def requestAddShelf
-        # @@shelves += 1
         addShelf = Hash.new
         addShelf = {"hersheys"=>0, "snickers"=>0, "skittles"=>0, "gummybears"=>0, "nerds"=>0, "sourpatch"=>0}
         @@shelves.push(addShelf)
+        count = shelfQty
+        puts "You now have #{count} shelfs"
+        sleep(3)
+        system "clear"
     end
 
     def requestDeleteShelf
-        # @@shelves -= 1
-        
+
         count = shelfQty
 
         if count == 0
             puts "The are already no shelves available"
+            sleep(3)
+            system "clear"
         else
             @@shelves.pop()
+            count = shelfQty
+            puts "You now have #{count} shelfs."
+            sleep(3)
+            system "clear"
         end
+
     end
 
     def selectShop
@@ -55,7 +62,7 @@ class Shop
     end
 
     def selectShopOptions
-
+        
         input = gets.to_i
 
         if input == 1
@@ -68,10 +75,13 @@ class Shop
             system "clear"
             return 0
         elsif input == 2
+            system "clear"
             return 2
         elsif input == 3
+            system "clear"
             return -1 
         elsif input == 4
+            system "clear"
             return 4
         end
     end

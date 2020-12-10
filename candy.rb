@@ -2,14 +2,8 @@ require_relative "shelf"
 
 class Candy < Shelf
 
-    # attr_accessor :candy
-
     def initialize(newItems)
         @newItems = newItems
-    end
-
-    def newItems 
-        return @newItems
     end
 
     def candyInventory
@@ -65,7 +59,7 @@ class Candy < Shelf
         end
 
         candyNames = ["hersheys", "snickers","skittles","gummybears","nerds","sourpatch"]
-        lineSeperate = "-" * 18
+        lineSeperate = "-" * 50
         puts lineSeperate
         puts "Brand \t\t\t Stocked \t Unstocked"
         puts lineSeperate
@@ -84,7 +78,7 @@ class Candy < Shelf
 
         orderedCandy = ""
 
-        puts "select which type of candy you want to order: "
+        puts "select which type of candy you want to order: \n "
 
         puts "1. Hershey's"
         puts "2. Snickers"
@@ -109,6 +103,7 @@ class Candy < Shelf
             orderedCandy = "sourpatch"
         end
 
+        system "clear"
         puts "how much candy do you want to order?"
         amount = gets.to_i
 
@@ -116,19 +111,10 @@ class Candy < Shelf
             @newItems.push(orderedCandy)
         end
 
-        puts "Sucess!"
+        system "clear"
+        puts "Success!"
         sleep(2)
 
-    end
-    
-
-    def displayCandyOptions
-        puts "\t 1. Check candy inventory"
-        puts "\t 2. Order Candy"
-        puts "\t 3. Stock unshelved candy"
-        puts "\t 4. Remove candy from shelfs"
-        puts "\t 5. Back to the previous menu"
-        puts "\t 6. Exit Program"
     end
 
     def addSpace(storeItems)
@@ -138,11 +124,13 @@ class Candy < Shelf
         unshelvedItems = storeItems.length 
         addQty = (unshelvedItems - space) / 25.00
 
+        system "clear"
         puts "unshelved items is #{unshelvedItems}"
         puts "space availabe is #{space}"
         puts "addQty came at #{addQty}"
         puts "adding #{addQty.ceil()} shelfs now..."
-        sleep(4)
+        sleep(3)
+        system "clear"
 
         for i in 1..addQty.ceil()
             requestAddShelf
@@ -210,14 +198,10 @@ class Candy < Shelf
 
                 if key == type
 
-                    puts "found some items in the shelf"
-                    sleep(3)
-
                     if pulledAmountleft > value
 
                         for i in 1..value
                             pulledCandy.push(type)
-                            puts "We pulled the following candy: #{pulledCandy}"
                         end
 
                         pulledAmountleft -= value
@@ -227,7 +211,6 @@ class Candy < Shelf
                         
                         for i in 1..pulledAmountleft
                             pulledCandy.push(type)
-                            puts "We pulled the following candy: #{pulledCandy}"
                         end
 
                         @@shelves[count][type] -= pulledAmountleft
@@ -282,16 +265,29 @@ class Candy < Shelf
 
         selectedElements = []
         count = 0
+        grabbedItems = 0
+
+        # uncomment below code if debugging testing is needed
+
+        # puts "Looking for #{type}"
+        # puts "Before searching, here is the unshelved items: \n\n"
+        # puts @newItems.inspect
 
         @newItems.each do |i|
+
+            #puts "searching #{type}" #for debugging
+            sleep(2)
             
-            if count == amount
+            if grabbedItems == amount
                 break
             elsif i == type
+                #puts "found #{type}" #for debugging
+                sleep(2)
                 selectedElements.push(type)
                 @newItems.delete_at(count)
             end
 
+            grabbedItems
             count += 1
         end
 
@@ -300,24 +296,34 @@ class Candy < Shelf
 
     end
 
+    def displayCandyOptions
+        puts "\t 1. Check candy inventory"
+        puts "\t 2. Order Candy"
+        puts "\t 3. Stock unshelved candy"
+        puts "\t 4. Remove candy from shelfs"
+        puts "\t 5. Back to the previous menu"
+        puts "\t 6. Exit Program"
+    end
+
     def stockCandyOptions
 
         #will use stockCandy(arg), addSpace(arg), openShelfSpace
-    
         #openShelfSpace return a value for you to determine to stock right away or not
-
         #check if unshelved items are empty first before continuing
     
         selectedItems = []
         space = openShelfSpace
         candyAmount = 0
+        validate = false
 
-        puts "you currently have #{@newItems.length} unshelved items"
-        puts "open shelf space available is #{space}"
+        puts "You currently have #{@newItems.length} unshelved items."
+        puts "Open shelf space available is #{space}.\n\n"
 
         if @newItems.length == 0
 
-            puts "There are no unshelved items at this time. Please order more items before trying again."
+            system "clear"
+            puts "There are no unshelved items at this time."
+            puts "Please order more items before trying again."
             sleep(3)
         else
     
@@ -330,6 +336,7 @@ class Candy < Shelf
             if input == 1
         
                 if space < @newItems.length
+                    system "clear"
                     puts "You do not have enough space to store all items. You need to add more shelfs first. Would you like to add necessary shelfs?"
                     puts "\n1. Yes"
                     puts "2. No"
@@ -339,19 +346,24 @@ class Candy < Shelf
                     if input == 1
                         addSpace(@newItems)
                         stockCandy(@newItems)
+                        system "clear"
                         puts "Success!"
                         sleep(2)
                     else
+                        system "clear"
                         puts "Ok then. Another time."
+                        sleep(2)
                         input = 1 #due to the last prompt so it doesnt jump to the next
                     end
                 
                 else
                     stockCandy(@newItems)
+                    system "clear"
                     puts "Success!"
                     sleep(2)
                 end
             elsif input == 2
+                system "clear"
                 puts "Ok. Do you wish to select candy instead you wish to stock?"
                 puts "\n1. Yes"
                 puts "2. No"
@@ -359,6 +371,7 @@ class Candy < Shelf
                 input = gets.to_i
         
                 if input == 1
+                    system "clear"
                     puts "\nSelect from the following list you wish to select"
                     puts "\n1. Hershey's"
                     puts "2. Snickers"
@@ -373,10 +386,11 @@ class Candy < Shelf
                     brandQty = unshelvedBrandQty(candyType)
 
                     if brandQty == 0
+                        system "clear"
                         puts "you have to items for the selected brand over with the unshelved items. Check inventory and try again."
                         sleep(3)
                     else 
-                            #START TAB HERE-----------------------
+                        system "clear"
                         puts "\nThere are a total of #{brandQty} number of #{candyType} available to restock."
                         puts "How many #{candyType} items do you wish to stock? Choose only available number of candy."
 
@@ -384,24 +398,20 @@ class Candy < Shelf
                             candyAmount = gets.to_i
                                 
                             if candyAmount > brandQty
+                                system "clear"
                                 puts "Try again. You have to select an amount less or equal to the amount available of unshelved items."
-                                #puts "If amount for the item was 0, type 0 and try another item next time."
+                                sleep(3)
 
                             else 
-                                puts "exiting validation loop. Delete this line later!"
-                                sleep(3)
                                 validate = true
                             end
 
                         end
-            
-                        # for i in 1..candyAmount
-                        #     selectedItems.push(candyType)
-                        # end
 
                         selectedItems = selectNewItems(candyType,candyAmount)
             
                         if candyAmount > space
+                            system "clear"
                             puts "You do not have enough space to store all items. You need to add more shelfs first. Would you like to add necessary shelfs?"
                             puts "\n1. Yes"
                             puts "2. No"
@@ -412,18 +422,22 @@ class Candy < Shelf
                                 addSpace(selectedItems)                        
                                 stockCandy(selectedItems)
                             else
+                                system "clear"
                                 puts "Ok then. Another time."
+                                sleep(2)
                                 input = 1 #due to the last prompt so it doesnt jump to the next
                             end
                         else                        
                             stockCandy(selectedItems)
+                            system "clear"
                             puts "Added selected amount of candy successfully!"
-                            sleep(2)
+                            sleep(3)
                         end
-                            #STOP TAB HERE ------------------
                     end
                 else
+                    system "clear"
                     puts "Sounds good. Cya!"
+                    sleep(2)
                 end
         
             end
@@ -438,6 +452,7 @@ class Candy < Shelf
         shelfs = shelfQty
         
         if shelfs == 0
+            system "clear"
             puts "There are no shelfs available to remove candy from them"
             sleep(3)
         else
@@ -455,10 +470,11 @@ class Candy < Shelf
             brandQty = individualStockedCandy(candyType)
 
             if brandQty == 0 
+                system "clear"
                 puts "The selected item is empty within the shelved inventory. Check the inventory and come back again."
                 sleep(3)
             else
-
+                system "clear"
                 puts "There are a total of #{brandQty} items in stock for #{candyType}"
                 puts "How many would you like to remove?"
 
@@ -466,21 +482,16 @@ class Candy < Shelf
                     candyAmount = gets.to_i
                         
                     if candyAmount > brandQty
+                        system "clear"
                         puts "Try again. You have to select an amount less or equal to the amount available of unshelved items."
-                        #puts "If amount for the item was 0, type 0 and try another item next time."
-
                     else 
-                        puts "exiting validation loop. Delete this line later!"
-                        sleep(3)
                         validate = true
                     end
 
                 end
 
-                #skip if brandQty = 0
-
                 removedItems = pullStockedCandy(candyType,candyAmount)
-
+                system "clear"
                 puts "Put items back with other unshelved items or remove completely out of the store?"
                 puts "1. Back to unshelved"
                 puts "2. Remove completely"
@@ -488,20 +499,20 @@ class Candy < Shelf
                 action = gets.to_i
 
                 if action == 1
-                    #puts "the returned pull candy is: #{removedItems}"
-                    puts "You currently have: #{@newItems}"
 
                     for i in 0..removedItems.length - 1
 
                         @newItems.push(removedItems[i])
 
                     end
-                    
-                    puts "After the change: #{@newItems}"
+
+                    system "clear"
                     puts "Successfully moved selected items back with unshelved items"
-                    sleep(7)
+                    sleep(3)
+                    
                 elsif action == 2
                     #no need to do any other action anymore since items where already removed from shelf withp pullStockedCandy method
+                    system "clear"
                     puts "Successfully removed selected items out of the store"
                     sleep(3)
                 end
@@ -517,7 +528,7 @@ class Candy < Shelf
         if input == 1
             system "clear"
             candyInventory
-            sleep(7)
+            sleep(5)
             system "clear"
         elsif input == 2
             system "clear"

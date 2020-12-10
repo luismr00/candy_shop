@@ -5,7 +5,7 @@ class Shelf < Shop
     attr_accessor :candy
 
     def initialize()
-     
+        #might have to delete
     end
 
     def stockedCandy
@@ -22,10 +22,12 @@ class Shelf < Shop
     end
 
     def openShelfSpace
+
         #max space per shelf is 25 items at a time
         shelfCount = shelfQty
         stockCount = stockedCandy
         return (25 * shelfCount) - stockCount
+
     end
 
 
@@ -35,8 +37,9 @@ class Shelf < Shop
 
         if count == 0
             puts "There are no shelfs available to check the inventory"
+            sleep(3)
         else
-            puts "which shelf do you wish to check: "
+            puts "which shelf do you wish to check: \n\n"
             
             chocolate = 0
             sour = 0
@@ -49,7 +52,7 @@ class Shelf < Shop
             input = gets.to_i
 
             system "clear"
-            puts "Shelf #{input} contains the following candy: \n"
+            puts "Shelf #{input} contains the following candy: \n\n"
 
             @@shelves[input - 1].each do |key, value|
 
@@ -69,6 +72,7 @@ class Shelf < Shop
             sleep(3)
             system "clear"
         end
+
     end
 
     def displayShelfOptions
@@ -87,15 +91,14 @@ class Shelf < Shop
         if input == 1
             system "clear"
             shelvedInventory
+
         elsif input == 2
+            system "clear"
             requestAddShelf
-            count = shelfQty
-            puts "You know have #{count} shelfs. COME BACK AND FIX THIS "
             return 0
         elsif input == 3
+            system "clear"
             requestDeleteShelf
-            count = shelfQty
-            puts "You know have #{count} shelfs. COME BACK AND FIX THIS"
             return 0
         elsif input == 4
             return 4
