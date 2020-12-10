@@ -1,2 +1,3 @@
-# candy_shop
+# Candy Shop Program
+
 Candy Shop coded in Ruby Language
